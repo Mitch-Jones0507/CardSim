@@ -32,7 +32,7 @@ export const Hand: FC = () => {
 
   const cardIdsToHighlight = hovering
     ? matches[hovering].flat()
-    : []
+    : gameState.hand.map(card => card.id)
     // : gameState.hand.map(card => card.id)
 
   return (
@@ -48,12 +48,12 @@ export const Hand: FC = () => {
         <View className="h-full w-fit flex-row gap-2" onLayout={onCardContentLayout}>
           {gameState.hand.map(card => gameState.handSwapEnabled
             ? <Pressable key={card.id}
-                         className={`h-full w-fit ${cardIdsToHighlight.includes(card.id) ? "opacity-100" : "opacity-60"}`}
+                         className={`h-full w-fit ${cardIdsToHighlight.includes(card.id) ? "opacity-100" : "opacity-20"}`}
                          onPress={() => cardOnPress(card)}>
               <Card card={card} />
             </Pressable>
             : <View key={card.id}
-                    className={`h-full w-fit ${cardIdsToHighlight.includes(card.id) ? "opacity-100" : "opacity-60"}`}>
+                    className={`h-full w-fit ${cardIdsToHighlight.includes(card.id) ? "opacity-100" : "opacity-20"}`}>
               <Card card={card} />
             </View>)}
         </View>

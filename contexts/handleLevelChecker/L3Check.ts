@@ -2,8 +2,6 @@ import { nOfSameProperty } from "@/contexts/handleLevelChecker/util/nOfSamePrope
 import { nOfDifferentProperty } from "@/contexts/handleLevelChecker/util/nOfDifferentProperty"
 import { getMark, getSuit } from "@/contexts/handleLevelChecker/util/getters"
 import { nOfSpecificValWithSameProperty } from "@/contexts/handleLevelChecker/util/nOfSpecificValWithSameProperty"
-
-
 import { THandLevelChecker } from "@/contexts/handleLevelChecker/util/types"
 import { goodCardFilter } from "@/contexts/handleLevelChecker/util/filters"
 
