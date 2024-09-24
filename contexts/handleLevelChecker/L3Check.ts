@@ -1,4 +1,3 @@
-import type { Card } from "@/types/Card"
 import { nOfSameProperty } from "@/contexts/handleLevelChecker/util/nOfSameProperty"
 import { nOfDifferentProperty } from "@/contexts/handleLevelChecker/util/nOfDifferentProperty"
 import { getMark, getSuit } from "@/contexts/handleLevelChecker/util/getters"
