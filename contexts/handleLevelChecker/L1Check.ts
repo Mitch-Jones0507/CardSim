@@ -1,4 +1,4 @@
-import { nOfSameVal } from "@/contexts/handleLevelChecker/util/nOfSameVal"
+import { nOfSameProperty } from "@/contexts/handleLevelChecker/util/nOfSameProperty"
 import { getSuit } from "@/contexts/handleLevelChecker/util/getters"
 
 
@@ -12,7 +12,7 @@ import { THandLevelChecker } from "@/contexts/handleLevelChecker/util/types"
 
 export const l1Check: THandLevelChecker = (hand) => [...twoOfSameSuitCheck(hand), ...oneGoodCardCheck(hand)]
 
-const twoOfSameSuitCheck: THandLevelChecker = (hand) => nOfSameVal(hand, getSuit, 2)
+const twoOfSameSuitCheck: THandLevelChecker = (hand) => nOfSameProperty(hand, getSuit, 2)
 
 const oneGoodCardCheck: THandLevelChecker = (hand) => {
   const goodCards = hand.filter(card => card.attribute === "Good")

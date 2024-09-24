@@ -1,7 +1,7 @@
 import type { Card } from "@/types/Card"
-import { nOfSameVal } from "@/contexts/handleLevelChecker/util/nOfSameVal"
+import { nOfSameProperty } from "@/contexts/handleLevelChecker/util/nOfSameProperty"
 import { getMark, getSuit } from "@/contexts/handleLevelChecker/util/getters"
-import { nOfSpecificValWithSameType } from "@/contexts/handleLevelChecker/util/nOfSpecificValWithSameType"
+import { nOfSpecificValWithSameProperty } from "@/contexts/handleLevelChecker/util/nOfSpecificValWithSameProperty"
 
 
 import { THandLevelChecker } from "@/contexts/handleLevelChecker/util/types"
@@ -19,8 +19,8 @@ export const l2Check: THandLevelChecker = (hand) => [
   ...twoGoodCardsWithSameSuit(hand)
 ]
 
-const threeOfSameSuitCheck: THandLevelChecker = (hand) => nOfSameVal(hand, getSuit, 3)
+const threeOfSameSuitCheck: THandLevelChecker = (hand) => nOfSameProperty(hand, getSuit, 3)
 
-const twoOfSameMarkCheck: THandLevelChecker = (hand) => nOfSameVal(hand, getMark, 2)
+const twoOfSameMarkCheck: THandLevelChecker = (hand) => nOfSameProperty(hand, getMark, 2)
 
-const twoGoodCardsWithSameSuit: THandLevelChecker = (hand) => nOfSpecificValWithSameType(hand, (card: Card) => card.attribute === "Good", getSuit, 2)
+const twoGoodCardsWithSameSuit: THandLevelChecker = (hand) => nOfSpecificValWithSameProperty(hand, (card: Card) => card.attribute === "Good", getSuit, 2)

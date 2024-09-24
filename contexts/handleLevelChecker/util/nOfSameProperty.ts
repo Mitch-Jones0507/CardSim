@@ -2,7 +2,7 @@ import { Card } from "@/types/Card"
 import _ from "lodash"
 import { getId } from "@/contexts/handleLevelChecker/util/getters"
 
-export const nOfSameVal = <T extends keyof Card>(
+export const nOfSameProperty = <T extends keyof Card>(
   hand: Array<Card>,
   getVal: (card: Card) => Card[T],
   n: number

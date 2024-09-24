@@ -1,9 +1,12 @@
-import { nOfSameVal } from "@/contexts/handleLevelChecker/util/nOfSameVal"
-import { getMark } from "@/contexts/handleLevelChecker/util/getters"
+import { nOfSameProperty } from "@/contexts/handleLevelChecker/util/nOfSameProperty"
+import { getMark, getSuit } from "@/contexts/handleLevelChecker/util/getters"
 import { Card } from "@/types/Card"
 
 
 import { THandLevelChecker } from "@/contexts/handleLevelChecker/util/types"
+import { nOfSpecificValWithSameProperty } from "@/contexts/handleLevelChecker/util/nOfSpecificValWithSameProperty"
+import { goodCardFilter } from "@/contexts/handleLevelChecker/util/filters"
+import { nOfDifferentProperty } from "@/contexts/handleLevelChecker/util/nOfDifferentProperty"
 
 /*
 * Should pass if:
@@ -15,13 +18,23 @@ import { THandLevelChecker } from "@/contexts/handleLevelChecker/util/types"
 
 export const l4Check: THandLevelChecker = (hand) => [
   ...fourOfTheSameMark(hand),
-  ...twoSameSuitSameMark(hand)
+  ...twoSameSuitSameMark(hand),
+  ...threeGoodWithSameMark(hand),
+  ...fourGoodDifferentSuit(hand)
 ]
 
-const fourOfTheSameMark: THandLevelChecker = (hand) => nOfSameVal(hand, getMark, 4)
+const fourOfTheSameMark: THandLevelChecker = (hand) => nOfSameProperty(hand, getMark, 4)
 
 const twoSameSuitSameMark: THandLevelChecker = (hand) => {
   const getSuitAndMark = (card: Card) => `${card.suit}-${card.mark}`
 
-  return nOfSameVal(hand, getSuitAndMark, 2)
+  return nOfSameProperty(hand, getSuitAndMark, 2)
+}
+
+const threeGoodWithSameMark: THandLevelChecker = (hand) => nOfSpecificValWithSameProperty(hand, goodCardFilter, getMark, 3)
+
+const fourGoodDifferentSuit: THandLevelChecker = (hand) => {
+  const filteredCards = hand.filter(goodCardFilter)
+
+  return nOfDifferentProperty(filteredCards, getSuit, 4)
 }
