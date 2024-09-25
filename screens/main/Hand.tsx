@@ -11,7 +11,7 @@ import { useHandLevelChecker } from "@/hooks/useHandLevelChecker"
 
 export const Hand: FC = () => {
   const { gameState, dispatch } = useGameState()
-  const { hovering, matches } = useHandLevelChecker()
+  const { hovering, successfulMatches } = useHandLevelChecker()
   const [selectedSwapIds, setSelectedSwapIds] = useState<Array<string>>([])
   const { containerWidth, cardContentWidth, onContainerLayout, onCardContentLayout } = useHandLayoutMeasurements()
 
@@ -31,7 +31,7 @@ export const Hand: FC = () => {
   const centerAlignCards = cardContentWidth <= containerWidth
 
   const cardIdsToHighlight = hovering
-    ? matches[hovering].flat()
+    ? successfulMatches[hovering].flat()
     : gameState.hand.map(card => card.id)
     // : gameState.hand.map(card => card.id)
 

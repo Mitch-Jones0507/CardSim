@@ -5,8 +5,13 @@ import { Divider } from "@/components/ui/divider"
 import { HStack } from "@/components/ui/hstack"
 import { VStack } from "@/components/ui/vstack"
 import { ComboDisplayArea } from "@/components/ComboDisplayArea"
+import { Popover, PopoverBackdrop, PopoverBody, PopoverContent } from "@/components/ui/popover"
+import { useHandLevelChecker } from "@/hooks/useHandLevelChecker"
+import { Text } from "@/components/ui/text"
+import { typedEntries } from "@/util/typedEntries"
 
 export const MainScreen = () => {
+
   return (
     <VStack className="h-full w-full">
       <Box className="h-3/5 bg-emerald-50">
@@ -18,10 +23,39 @@ export const MainScreen = () => {
         </Box>
         <Divider orientation="vertical" />
         <Box className="h-full w-fit bg-emerald-800">
-          <ComboDisplayArea />
+          <ComboDisplayPopover />
         </Box>
       </HStack>
     </VStack>
   )
 }
 
+const ComboDisplayPopover = () => {
+  const { hovering } = useHandLevelChecker()
+
+  return <Popover
+    isOpen={!!hovering}
+    trigger={() => (
+      <ComboDisplayArea />
+    )}
+  >
+    {/*<PopoverBackdrop />*/}
+    <PopoverContent className="shadow-soft-1">
+      <ComboDisplayPopoverBody />
+    </PopoverContent>
+  </Popover>
+}
+
+const ComboDisplayPopoverBody = () => {
+  const { hovering, successfulMatches } = useHandLevelChecker()
+
+  if (hovering) {
+    return <PopoverBody>{
+      typedEntries(successfulMatches)
+        .filter(([levelName]) => levelName === hovering)
+        .map((([_, match]) => <VStack>{
+          match.map(match => <Text>{match.matchName}</Text>)
+        }</VStack>))
+    }</PopoverBody>
+  }
+}

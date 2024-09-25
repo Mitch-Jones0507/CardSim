@@ -17,21 +17,22 @@ const comboLevelsColourMap: Record<CardComboLevels, string> = {
 
 export const ComboDisplayArea = () => {
   const {
-    matches,
+    successfulMatches,
     comboCardOnPointerEnter,
     comboCardOnPointerLeave
   } = useHandLevelChecker()
 
-  return <VStack className="h-full w-fit p-4 items-center justify-center gap-2">
-    {typedEntries(matches).map(([levelName, visibleCards]) => (
+  return <VStack className="h-full w-fit p-2 items-center justify-center gap-2">
+    {typedEntries(successfulMatches).map(([levelName, matches]) => (
       <ComboCard
         key={levelName}
         text={levelName}
         colour={comboLevelsColourMap[levelName]}
-        visible={visibleCards.length > 0}
+        visible={matches.length > 0}
         onPointerEnter={() => comboCardOnPointerEnter(levelName)}
         onPointerLeave={comboCardOnPointerLeave}
-      />))}
+      />
+    ))}
   </VStack>
 }
 
