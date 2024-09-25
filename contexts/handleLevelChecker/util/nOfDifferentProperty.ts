@@ -11,3 +11,16 @@ export const nOfDifferentProperty = <T extends keyof Card>(hand: Array<Card>, ge
   }
   return []
 }
+
+export const nOfTwoDifferentProperties = <T extends keyof Card>(hand: Array<Card>, getVal: (card: Card) => Card[T], getVal2: (card: Card) => Card[T], n: number) => {
+  const valGroups = _.groupBy(hand, getVal)
+  const valGroupsData = _.values(valGroups)
+  if (Object.keys(valGroups).length >= n) {
+    const valGroups2 = _.groupBy(valGroupsData, getVal2)
+    if (Object.keys(valGroups2).length >= n) {
+      const idGroups = Object.values(valGroups2).map(cardGroup => cardGroup.map(getId))
+      return permute(idGroups)
+    }
+  }
+    return []
+  }
