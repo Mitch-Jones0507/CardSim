@@ -6,16 +6,16 @@ import { l3Check } from "@/contexts/handleLevelChecker/L3Check"
 import { l4Check } from "@/contexts/handleLevelChecker/L4Check"
 import { l5Check } from "@/contexts/handleLevelChecker/L5Check"
 import { l10Check } from "@/contexts/handleLevelChecker/L10Check"
-import { CardComboLevels } from "@/contexts/handleLevelChecker/util/types"
+import type { CardComboLevels, TMatches } from "@/contexts/handleLevelChecker/util/types"
 
 type THandLevelCheckerContext = {
   hovering: CardComboLevels | null
-  matches: Record<CardComboLevels, Array<Array<string>>>
+  successfulMatches: Record<CardComboLevels, TMatches>
   comboCardOnPointerEnter: (level: CardComboLevels) => void
   comboCardOnPointerLeave: () => void
 }
 
-const initialSuccessfulMatches: Record<CardComboLevels, Array<Array<string>>> = {
+const initialSuccessfulMatches: Record<CardComboLevels, TMatches> = {
   L1: [],
   L2: [],
   L3: [],
@@ -26,7 +26,7 @@ const initialSuccessfulMatches: Record<CardComboLevels, Array<Array<string>>> = 
 
 const contextDefaultValue: THandLevelCheckerContext = {
   hovering: null,
-  matches: initialSuccessfulMatches,
+  successfulMatches: initialSuccessfulMatches,
   comboCardOnPointerEnter: () => undefined,
   comboCardOnPointerLeave: () => undefined
 }
@@ -44,6 +44,7 @@ export const HandLevelCheckerProvider: FC<{ children: ReactNode }> = ({ children
   const { hand } = gameState
 
   useEffect(() => {
+    console.log("L1", l1Check(hand))
     setSuccessfulMatches({
       L1: l1Check(hand),
       L2: l2Check(hand),
@@ -56,7 +57,7 @@ export const HandLevelCheckerProvider: FC<{ children: ReactNode }> = ({ children
 
   return <HandLevelCheckerContext.Provider value={{
     hovering: hoveringComboCard,
-    matches: successfulMatches,
+    successfulMatches: successfulMatches,
     comboCardOnPointerEnter,
     comboCardOnPointerLeave
   }}>

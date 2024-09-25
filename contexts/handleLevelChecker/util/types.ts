@@ -1,6 +1,8 @@
 import { Card } from "@/types/Card"
 
-export type THandLevelChecker = (hand: Array<Card>) => Array<Array<string>>
+export type TMatches = Array<{ matchName: string, matches: Array<Array<string>> }>
+export type THandCheck = { matchName: string, check: (hand: Array<Card>) => Array<Array<string>> }
+export type TLevelCheck = (hand: Array<Card>) => TMatches
 
 export type CardComboLevels =
   | "L1" | "L2"

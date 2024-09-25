@@ -2,8 +2,10 @@ import { nOfSameProperty } from "@/contexts/handleLevelChecker/util/nOfSamePrope
 import { nOfDifferentProperty } from "@/contexts/handleLevelChecker/util/nOfDifferentProperty"
 import { getMark, getSuit } from "@/contexts/handleLevelChecker/util/getters"
 import { nOfSpecificValWithSameProperty } from "@/contexts/handleLevelChecker/util/nOfSpecificValWithSameProperty"
-import { THandLevelChecker } from "@/contexts/handleLevelChecker/util/types"
+import { THandCheck, TLevelCheck } from "@/contexts/handleLevelChecker/util/types"
 import { goodCardFilter } from "@/contexts/handleLevelChecker/util/filters"
+import { handChecksToLevelCheck } from "@/contexts/handleLevelChecker/util/handChecksToLevelCheck"
+import { Card } from "@/types/Card"
 
 /*
 * Should pass if:
@@ -13,17 +15,29 @@ import { goodCardFilter } from "@/contexts/handleLevelChecker/util/filters"
 * - 2 good cards with same mark
 */
 
-export const l3Check: THandLevelChecker = (hand) => [
-  ...threeOfTheSameMark(hand),
-  ...fourDifferentSuits(hand),
-  ...threeGoodCardsWithSameSuit(hand),
-  ...twoGoodCardsWithSameMark(hand)
-]
+const threeOfSameMark: THandCheck = {
+  matchName: "threeOfSameMark",
+  check: (hand) => nOfSameProperty(hand, getMark, 3)
+}
 
-const threeOfTheSameMark: THandLevelChecker = (hand) => nOfSameProperty(hand, getMark, 3)
+const fourDifferentSuits: THandCheck = {
+  matchName: "fourDifferentSuits",
+  check: (hand) => nOfDifferentProperty(hand, getSuit, 4)
+}
 
-const fourDifferentSuits: THandLevelChecker = (hand) => nOfDifferentProperty(hand, getSuit, 4)
+const threeGoodCardsWithSameSuit: THandCheck = {
+  matchName: "threeGoodCardsWithSameSuit",
+  check: (hand) => nOfSpecificValWithSameProperty(hand, goodCardFilter, getSuit, 3)
+}
 
-const threeGoodCardsWithSameSuit: THandLevelChecker = (hand) => nOfSpecificValWithSameProperty(hand, goodCardFilter, getSuit, 3)
+const twoGoodCardsWithSameMark: THandCheck = {
+  matchName: "twoGoodCardsWithSameMark",
+  check: (hand) => nOfSpecificValWithSameProperty(hand, goodCardFilter, getMark, 2)
+}
 
-const twoGoodCardsWithSameMark: THandLevelChecker = (hand) => nOfSpecificValWithSameProperty(hand, goodCardFilter, getMark, 2)
+export const l3Check: TLevelCheck = (hand: Array<Card>) => handChecksToLevelCheck([
+  threeOfSameMark,
+  fourDifferentSuits,
+  threeGoodCardsWithSameSuit,
+  twoGoodCardsWithSameMark
+], hand)
